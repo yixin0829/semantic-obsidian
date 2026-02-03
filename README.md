@@ -1,0 +1,56 @@
+# Semantic Obsidian
+
+Agent skills for making your Obsidian vault semantic. This Claude Code plugin provides tools for managing wikilinks, frontmatter metadata, and semantic relationships in your notes.
+
+## Installation
+
+### Via Marketplace
+
+```shell
+/plugin marketplace add yixin0829/semantic-obsidian
+/plugin install obsidian@semantic-obsidian
+```
+
+### Manually
+Copy the `skills/` directory into your relevant AI IDE folder, e.g. `.claude/skills/` for Claude Code. Refer to [Claude Skills](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) and [Agent Skills](https://agentskills.io/home) for more information.
+
+## Skills
+
+This plugin includes 7 skills for managing your Obsidian vault:
+
+| Skill | Description |
+|-------|-------------|
+| `resolve-alias-links` | Convert alias wikilinks `[[alias]]` to explicit format `[[note\|alias]]` |
+| `assimilate-knowledge` | Integrate new knowledge into SlipBox notes |
+| `wikilink-graph-bfs` | BFS traversal on wikilink graph to explore note relationships |
+| `dedupe-frontmatter-links` | Remove duplicate wikilinks in YAML frontmatter properties |
+| `frontmatter-parser` | Parse and query YAML frontmatter metadata |
+| `knowledge-review` | Random walk through notes to review and strengthen knowledge |
+| `sync-semantic-links` | Validate and sync bidirectional semantic links (RELATED_TO, PRIOR/NEXT) |
+
+## Usage Examples
+
+### Resolve alias links
+```
+Scan my vault for alias links and convert them to explicit format
+```
+
+### Explore note connections
+```
+Do a BFS traversal starting from "Machine Learning" for 2 hops
+```
+
+### Review knowledge
+```
+Review my knowledge - pick a random note and audit its connections
+```
+
+### Sync semantic links
+```
+Validate all RELATED_TO links are bidirectional in my SlipBox
+```
+
+### Parse frontmatter
+```
+Find all notes with tag "slip-box/concept"
+```
