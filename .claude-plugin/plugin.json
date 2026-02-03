@@ -1,0 +1,19 @@
+{
+  "name": "semantic-obsidian",
+  "description": "Agent skills for making your Obsidian vault semantic",
+  "version": "1.0.0",
+  "author": {
+    "name": "Yixin Tian",
+    "url": "https://www.yixtian.com/"
+  },
+  "repository": "https://github.com/yixin0829/semantic-obsidian",
+  "license": "MIT",
+  "keywords": [
+    "obsidian",
+    "markdown",
+    "pkm",
+    "notes",
+    "semantic",
+    "graph"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "semantic-obsidian",
+  "owner": {
+    "name": "Yixin Tian",
+    "url": "https://www.yixtian.com/"
+  },
+  "plugins": [
+    {
+      "name": "obsidian",
+      "source": "./",
+      "description": "Agent skills for making your Obsidian vault semantic",
+      "version": "1.0.0"
+    }
+  ]
+}
