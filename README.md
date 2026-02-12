@@ -16,7 +16,7 @@ Copy the `skills/` directory into your relevant AI IDE folder, e.g. `.claude/ski
 
 ## Skills
 
-This plugin includes 8 skills for managing your Obsidian vault:
+This plugin includes 9 skills for managing your Obsidian vault:
 
 | Skill | Description |
 |-------|-------------|
@@ -26,6 +26,7 @@ This plugin includes 8 skills for managing your Obsidian vault:
 | `dedupe-frontmatter-links` | Remove duplicate wikilinks in YAML frontmatter properties |
 | `frontmatter-parser` | Parse and query YAML frontmatter metadata |
 | `knowledge-review` | Random walk through notes to review and strengthen knowledge |
+| `obsidian-cli` | Interact with Obsidian vaults via the `obsidian` CLI for reading, searching, and managing notes |
 | `summarize-note` | Generate AI summaries for markdown notes using Ollama and populate frontmatter `summary` property |
 | `sync-semantic-links` | Validate and sync bidirectional semantic links (RELATED_TO, PRIOR/NEXT) |
 
@@ -64,6 +65,11 @@ Remove duplicate wikilinks from frontmatter properties in my vault
 ### Summarize notes
 ```
 Summarize all my SlipBox notes using qwen3:8b.
+```
+
+### Interact with vault via CLI
+```
+Search my vault for notes about "neural networks" and show their backlinks
 ```
 
 ### Parse frontmatter
