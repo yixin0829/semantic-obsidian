@@ -6,7 +6,7 @@
   },
   "plugins": [
     {
-      "name": "semantic-obsidian-skills",
+      "name": "semantic-skills",
       "source": "./",
       "description": "Agent skills for making your Obsidian vault semantic",
       "version": "1.0.0"

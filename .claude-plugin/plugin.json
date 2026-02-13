@@ -1,6 +1,6 @@
 {
-  "name": "semantic-obsidian",
-  "description": "Agent skills for making your Obsidian vault semantic",
+  "name": "semantic-skills",
+  "description": "Agent skills for creating a semantic Obsidian vault",
   "version": "1.0.0",
   "author": {
     "name": "Yixin Tian",
