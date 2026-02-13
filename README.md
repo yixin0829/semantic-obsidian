@@ -8,7 +8,7 @@ Agent skills for making your Obsidian vault semantic. This Claude Code plugin pr
 
 ```shell
 /plugin marketplace add yixin0829/semantic-obsidian
-/plugin install obsidian@semantic-obsidian
+/plugin install semantic-skills@semantic-obsidian
 ```
 
 ### Manually
