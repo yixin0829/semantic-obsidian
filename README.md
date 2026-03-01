@@ -16,7 +16,7 @@ Copy the `skills/` directory into your relevant AI IDE folder, e.g. `.claude/ski
 
 ## Skills
 
-This plugin includes 9 skills for managing your Obsidian vault:
+This plugin includes 10 skills for managing your Obsidian vault:
 
 | Skill | Description |
 |-------|-------------|
@@ -28,6 +28,7 @@ This plugin includes 9 skills for managing your Obsidian vault:
 | `knowledge-review` | Random walk through notes to review and strengthen knowledge |
 | `summarize-note` | Generate AI summaries for markdown notes using Ollama and populate frontmatter `summary` property |
 | `sync-semantic-links` | Validate and sync bidirectional semantic links (RELATED_TO, PRIOR/NEXT) |
+| `organize-daily-notes` | Clean up and organize daily notes — fix spelling, grammar, capitalization, and markdown structure |
 
 ## Usage Examples
 
@@ -69,4 +70,9 @@ Summarize all my SlipBox notes using qwen3:8b.
 ### Parse frontmatter
 ```
 Find all notes with tag "slip-box/concept"
+```
+
+### Organize daily notes
+```
+Clean up my daily notes from the past week
 ```
