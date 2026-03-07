@@ -1,6 +1,6 @@
 ---
 name: organize-daily-notes
-description: Organize and clean up Obsidian daily notes over a configurable time range (default past 3 days). Fixes spelling mistakes, improves grammar and capitalization, restructures markdown headings for readability, and organizes loose text into proper bullet structures. Use whenever the user mentions cleaning up daily notes, organizing daily logs, tidying their notes, fixing spelling in daily notes, improving note formatting, or says things like "clean up my notes from the past week", "organize my daily logs for February", "tidy up my daily notes", "fix my recent notes". Also trigger when user mentions daily note hygiene, batch-editing daily entries, reviewing note formatting, or any request about making daily notes more readable.
+description: Organize and clean up Obsidian daily notes over a configurable time range (default past 3 days). Fixes spelling, grammar, capitalization, and markdown structure; organizes loose text; resolves implicit mentions of project/slipbox/reference notes to wikilinks. Use when the user mentions cleaning up daily notes, organizing daily logs, tidying notes, fixing spelling, improving note formatting, entity linking, or making daily notes more readable.
 allowed-tools: Read, Edit, Write, Glob, Bash, Agent
 ---
 
@@ -14,7 +14,7 @@ Clean up and organize Obsidian daily notes for improved readability and consiste
 
 ## Canonical Daily Note Structure
 
-Daily notes live in `00-Inbox/Daily/YYYY-MM-DD.md`. The expected section order is:
+Daily notes live in `00-Inbox/YYYY-MM-DD.md`. The expected section order is:
 
 ```markdown
 # YYYY-MM-DD
@@ -88,10 +88,23 @@ When restructuring, adjust all child headings to maintain relative depth. If a `
 - If it belongs to a nearby bullet list, indent it as a sub-bullet
 - If it's a standalone thought, make it a bullet point
 - If it's a continuation of a section, place it under the appropriate heading
+- When it's unclear which section it belongs to, prefer the section it's closest to, or ask the user
 
 ### 6. Security Flagging
 
 If you notice plaintext secrets, API keys, tokens, or passwords, flag them to the user in your summary. Do not delete them — the user may need them. Just note: "File X contains plaintext API keys/tokens that should be rotated if this vault is shared."
+
+### 7. Entity Linking
+
+Resolve plain-text mentions of existing vault notes to wikilinks. **Only add new links; never remove or change existing wikilinks** (including placeholders to notes that don't exist yet).
+
+**Linkable notes:** Notes in `01-Project/`, `02-Slipbox/`, and `03-Reference/`. Use the note's filename (without path or `.md`) as the link target. Discover them by Glob (see workflow Step 2b).
+
+**When to link:** Use context to decide when a span of text refers to a single existing note in those folders. Replace that span with `[[Full Note Name]]` (full note name only, no aliases). Match note titles as whole phrases with word boundaries; do not link substrings.
+
+**When not to link:** Do not link if you are unsure (multiple possible notes, ambiguous mention, or no matching note). Do not modify or remove any existing wikilink. Do not link inside existing wikilinks, task blocks, code blocks, or embeds.
+
+**Unresolved mentions:** When a mention could be an entity but cannot be resolved with confidence, do not add a link. Record it for the Step 6 report under "Unresolved entities" so the user can assist (e.g. create a note, add a link, or confirm leave as plain text). Include file, the mention snippet, and optionally possible matching notes.
 
 ## Workflow
 
@@ -107,8 +120,18 @@ Parse the user's request to determine the date range:
 
 Use Glob to find all matching daily notes:
 ```
-00-Inbox/Daily/YYYY-MM-DD.md
+00-Inbox/YYYY-MM-DD.md
 ```
+(If the vault uses a Daily subfolder, use `00-Inbox/Daily/YYYY-MM-DD.md`.)
+
+### Step 2b: Discover Linkable Entities
+
+Glob for existing notes in the entity folders to build the set of linkable note titles (filename without path or `.md`):
+- `01-Project/**/*.md`
+- `02-Slipbox/**/*.md`
+- `03-Reference/**/*.md`
+
+Use this list when applying entity linking in Step 5. Notes in other folders (e.g. 00-Inbox) are not linkable for this step.
 
 ### Step 3: Read All Notes in Parallel
 
@@ -120,6 +143,7 @@ Quickly scan each note and categorize:
 - **Skip**: Empty daily logs or already-clean notes (no changes needed)
 - **Minor fixes**: Only spelling/grammar issues (use Edit tool for targeted fixes)
 - **Major restructuring**: Section reordering or heading level changes needed (use Write tool for full rewrite)
+- **Entity linking**: Apply in every note that has linkable plain-text mentions (use the linkable-entities list from Step 2b); combine with minor or major fixes in the same pass
 
 ### Step 5: Apply Fixes
 
@@ -129,6 +153,10 @@ Process notes in chronological order. For each note:
 
 **Major restructuring** — When section order needs to change or heading levels need systematic adjustment, use the Write tool to rewrite the entire file. This is cleaner than attempting many overlapping Edit operations. Carefully preserve every piece of content when rewriting.
 
+**Both minor and major** — If a note needs both spelling/grammar fixes and structural changes, do a single Write pass that includes all fixes. Do not Edit first and then Write (the rewrite would overwrite the edits).
+
+**Entity linking** — When applying any fixes to a note, also resolve plain-text mentions to wikilinks (category 7) using the linkable-entities list. Include new links in the same Edit or Write pass. Record unresolved mentions for the report.
+
 ### Step 6: Report Summary
 
 After all edits are complete, provide a categorized summary grouped by change type:
@@ -136,14 +164,17 @@ After all edits are complete, provide a categorized summary grouped by change ty
 - **Spelling Fixes**: List each correction with the file it was in
 - **Grammar & Capitalization**: List each fix
 - **Markdown Organization**: Describe structural changes (section reordering, heading level adjustments, loose text organization)
+- **Entity Links Added**: List each new wikilink added (file and mention → `[[Note]]`)
+- **Unresolved Entities**: For each mention that could not be resolved with confidence, list the file, the mention snippet, and optionally possible matching notes so the user can assist
 - **Security Flags**: Note any exposed credentials
 - **Skipped Notes**: List dates that needed no changes
 
 This summary helps the user verify nothing was lost and understand what changed.
 
+
 ## Important Constraints
 
-1. **Wikilinks are sacred**: Never modify the target of a `[[wikilink]]`. You may capitalize surrounding text, but `[[Note Name]]` must remain exactly as written.
+1. **Wikilinks are sacred**: Never remove or modify existing wikilinks (including placeholders to notes that don't exist yet). Human-created links stay as-is. Only add new wikilinks where plain text is resolved to an existing note in 01-Project, 02-Slipbox, or 03-Reference. When editing around an existing link, do not change its target or display text.
 2. **Task checkboxes are sacred**: Never modify task checkbox syntax (`- [x]`, `- [ ]`, `- [/]`, `- [-]`), task metadata (dates, priorities), or task plugin syntax (`#task`, `⏫`, `🛫`, `📅`, `✅`).
 3. **Embedded content is sacred**: Never modify `![[image]]` embeds or `![[note]]` transclusions.
 4. **Backlog queries are sacred**: Never modify the content inside ` ```tasks ``` ` code blocks.
