@@ -1,6 +1,6 @@
 ---
 name: organize-daily-notes
-description: Organize and clean up Obsidian daily notes over a configurable time range (default past 3 days). Fixes spelling, grammar, capitalization, and markdown structure; organizes loose text; resolves implicit mentions of project/slipbox/reference notes to wikilinks. Use when the user mentions cleaning up daily notes, organizing daily logs, tidying notes, fixing spelling, improving note formatting, entity linking, or making daily notes more readable.
+description: Organize and clean up Obsidian daily notes over a configurable time range (default past 3 days). Fixes spelling, grammar, capitalization, and markdown structure; organizes loose text; resolves implicit mentions of project/slipbox/reference notes to wikilinks. When notes contain embedded images, use the image-metadata-from-cache skill to attach AI-generated image descriptions as context. Use when the user mentions cleaning up daily notes, organizing daily logs, tidying notes, fixing spelling, improving note formatting, entity linking, or making daily notes more readable.
 allowed-tools: Read, Edit, Write, Glob, Bash, Agent
 ---
 
@@ -148,6 +148,8 @@ Quickly scan each note and categorize:
 ### Step 5: Apply Fixes
 
 Process notes in chronological order. For each note:
+
+**Image context (when the note has embedded images)** — If the note contains embedded images (`![[...]]` or `![](...)`), use the **image-metadata-from-cache** skill to retrieve cached title/keywords/description for each image. Run the skill’s script with the vault root and the note path (e.g. `uv run python .cursor/skills/image-metadata-from-cache/scripts/get_image_metadata.py <vault_path> <note_path>`); use the returned JSON as context when applying fixes below (e.g. entity linking, spelling, or structure) so you understand what the images represent. Do not modify the embeds themselves (embedded content is sacred).
 
 **Minor fixes** — Use the Edit tool for each targeted change. Multiple independent edits to the same file should be done sequentially (each edit changes the file, so subsequent edits need the updated content).
 

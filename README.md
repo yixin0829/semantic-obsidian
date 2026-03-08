@@ -16,7 +16,7 @@ Copy the `skills/` directory into your relevant AI IDE folder, e.g. `.claude/ski
 
 ## Skills
 
-This plugin includes 10 skills for managing your Obsidian vault:
+This plugin includes 11 skills for managing your Obsidian vault:
 
 | Skill | Description |
 |-------|-------------|
@@ -25,6 +25,7 @@ This plugin includes 10 skills for managing your Obsidian vault:
 | `wikilink-graph-bfs` | BFS traversal on wikilink graph to explore note relationships |
 | `dedupe-frontmatter-links` | Remove duplicate wikilinks in YAML frontmatter properties |
 | `frontmatter-parser` | Parse and query YAML frontmatter metadata |
+| `image-metadata-from-cache` | Retrieve AI-generated title, keywords, and description for embedded images from the Obsidian ai-image-analyzer plugin cache |
 | `knowledge-review` | Random walk through notes to review and strengthen knowledge |
 | `summarize-note` | Generate AI summaries for markdown notes using Ollama and populate frontmatter `summary` property |
 | `sync-semantic-links` | Validate and sync bidirectional semantic links (RELATED_TO, PRIOR/NEXT) |
@@ -75,4 +76,9 @@ Find all notes with tag "slip-box/concept"
 ### Organize daily notes
 ```
 Clean up my daily notes from the past week
+```
+
+### Image metadata from cache
+```
+Get cached image descriptions for embedded images in 00-Inbox/2026-03-07.md
 ```
